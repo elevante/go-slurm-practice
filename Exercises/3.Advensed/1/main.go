@@ -48,10 +48,8 @@ func (c *Circle) Type() string {
 func main() {
 	rectangleNew := newRectangle(2.0, 4.0)
 	circleNew := newCircle(2.0)
-	squareRectangle := rectangleNew.Area()
-	squareCircle := circleNew.Area()
 
-	fmt.Println("Square", rectangleNew.Type(), squareRectangle)
-	fmt.Println("Square", circleNew.Type(), squareCircle)
+	fmt.Println("Square", rectangleNew.Type(), rectangleNew.Area())
+	fmt.Println("Square", circleNew.Type(), circleNew.Area())
 
 }
