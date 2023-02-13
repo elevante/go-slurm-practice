@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 	"sort"
 )
 
@@ -16,7 +15,8 @@ const (
 	FailStatus = "fail"
 )
 
-func GenerateCheck() (a []HealthCheck) {
+func GenerateCheck() []HealthCheck {
+	a := make([]HealthCheck, 0, 5)
 	for i := 0; i < 5; i++ {
 		if i%2 == 0 {
 			a = append(a, HealthCheck{i, PasStatus})
@@ -44,19 +44,14 @@ func NumsRepCheck(arr []int) bool {
 }
 
 func SortSliceCheck(a []string) bool {
-	b := make([]string, len(a))
-	copy(b, a)
-	sort.Slice(a, func(i, j int) bool { return a[i] < a[j] })
-	if reflect.DeepEqual(a, b) {
-		return true
-	}
-	return false
+	return sort.SliceIsSorted(a, func(i, j int) bool {
+		return a[i] < a[j]
+	})
 }
 
 func CountQuantityRep(s string) {
-	runes := []rune(s)
 	m := make(map[rune]int)
-	for _, key := range runes {
+	for _, key := range s {
 		m[key]++
 	}
 	for key, value := range m {
@@ -68,8 +63,8 @@ func main() {
 	//Task 1
 	fmt.Println("\tTask 1")
 	fmt.Println("Тут будет выведен идентификатор")
-	a := GenerateCheck()
-	for _, id := range a {
+	statusesCheck := GenerateCheck()
+	for _, id := range statusesCheck {
 		if id.status == "pass" {
 			fmt.Println(id.ServiceId)
 		}
